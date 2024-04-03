@@ -11,7 +11,7 @@ import java.util.List;
 public class Maze {
     private static final Logger logger = LogManager.getLogger();
 
-    private final List<List<Boolean>> maze = new ArrayList<>();
+    public final List<List<Boolean>> maze = new ArrayList<>();
 
     private final Position start;
     private final Position end;
