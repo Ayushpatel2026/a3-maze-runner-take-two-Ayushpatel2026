@@ -67,7 +67,7 @@ public class DijkstraSolver implements MazeSolver{
         Position current = endNode;
         while(!current.equals(startNode)){
             nodePath.add(current);
-            logger.info("Current Node: " + current.toString());
+            // logger.info("Current Node: " + current.toString());
             current = previousNodes.get(current);
         }
 

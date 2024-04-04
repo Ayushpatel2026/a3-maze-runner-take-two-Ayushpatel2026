@@ -26,9 +26,22 @@ public class Main {
                 } else {
                     System.out.println("incorrect path");
                 }
-            } else {
+            } else if (cmd.getOptionValue("baseline") != null) {
+                String method = cmd.getOptionValue("method", "righthand");
+                Path pathFromMethod = solveMaze(method, maze);
+                System.out.println("Number of steps for given method: "+pathFromMethod.getNumberOfSteps());
+                System.out.println("Path calculated from given method: "+pathFromMethod.getFactorizedForm());
+
+                String baselineMethod = cmd.getOptionValue("baseline");
+                Path baselinePath = solveMaze(baselineMethod, maze);
+                System.out.println("Number of steps for baseline method: "+baselinePath.getNumberOfSteps());
+                System.out.println("Path calculated from baseline method: "+baselinePath.getFactorizedForm());
+                System.out.printf("Speedup: %.2f\n", (double) baselinePath.getNumberOfSteps() / pathFromMethod.getNumberOfSteps());
+            }
+            else{
                 String method = cmd.getOptionValue("method", "righthand");
                 Path path = solveMaze(method, maze);
+                System.out.println(path.getNumberOfSteps());
                 System.out.println(path.getFactorizedForm());
             }
         } catch (Exception e) {

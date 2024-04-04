@@ -126,4 +126,9 @@ public class Path {
 
         return sb.toString();
     }
+
+    public int getNumberOfSteps() {
+        String pathWithoutSpaces = this.getCanonicalForm().replace(" ", "");
+        return pathWithoutSpaces.length();
+    }
 }
