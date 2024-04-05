@@ -16,7 +16,11 @@ public class Main {
         try {
             cmd = parser.parse(getParserOptions(), args);
             String filePath = cmd.getOptionValue('i');
+
+            double startTime = System.currentTimeMillis();
             Maze maze = new Maze(filePath);
+            double endTime = System.currentTimeMillis();
+            double timeToLoadMaze = endTime - startTime;
 
             if (cmd.getOptionValue("p") != null) {
                 logger.info("Validating path");
@@ -26,7 +30,31 @@ public class Main {
                 } else {
                     System.out.println("incorrect path");
                 }
-            } else {
+            } else if (cmd.getOptionValue("baseline") != null) {
+                System.out.printf("Maze loaded in %.2f miliseconds\n", timeToLoadMaze);
+
+                String method = cmd.getOptionValue("method", "righthand");
+                double startTimeMethod = System.currentTimeMillis();
+                Path pathFromMethod = solveMaze(method, maze);
+                double endTimeMethod = System.currentTimeMillis();
+                double timeForMethod = endTimeMethod - startTimeMethod;
+                System.out.println("Number of steps for given method: "+pathFromMethod.getNumberOfSteps());
+                System.out.println("Path calculated from given method: "+pathFromMethod.getFactorizedForm());
+                System.out.printf("Time to compute path using given method: %.2f miliseconds\n", timeForMethod);
+
+                String baselineMethod = cmd.getOptionValue("baseline");
+
+                double startTimeBaseline = System.currentTimeMillis();
+                Path baselinePath = solveMaze(baselineMethod, maze);
+                double endTimeBaseline = System.currentTimeMillis();
+                double timeForBaseline = endTimeBaseline - startTimeBaseline;
+
+                System.out.println("Number of steps for baseline method: "+baselinePath.getNumberOfSteps());
+                System.out.println("Path calculated from baseline method: "+baselinePath.getFactorizedForm());
+                System.out.printf("Time to compute path using baseline method: %.2f miliseconds\n", timeForBaseline);
+                System.out.printf("Speedup: %.2f\n", (double) baselinePath.getNumberOfSteps() / pathFromMethod.getNumberOfSteps());
+            }
+            else{
                 String method = cmd.getOptionValue("method", "righthand");
                 Path path = solveMaze(method, maze);
                 System.out.println(path.getFactorizedForm());
