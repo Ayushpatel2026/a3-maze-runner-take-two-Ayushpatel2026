@@ -1,9 +1,13 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 import java.util.*;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Graph{
+
+    private static final Logger logger = LogManager.getLogger();
+    
     //adjacency list representation using map
     private final Map<Position, List<Edge>> nodes = new HashMap<>();
 
@@ -39,6 +43,19 @@ public class Graph{
             }
         }
         return false;
+    }
+
+    public int getEdgeWeight(Position source, Position destination){
+        for(Edge edge : nodes.get(source)){
+            if(edge.getDestination().equals(destination)){
+                return edge.getWeight();
+            }
+        }
+        return -1;
+    }
+
+    public Set<Position> getNodes(){
+        return nodes.keySet();
     }
 
     static class Edge{

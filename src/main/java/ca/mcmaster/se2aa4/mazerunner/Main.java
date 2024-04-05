@@ -59,6 +59,10 @@ public class Main {
                 logger.debug("Tremaux algorithm chosen.");
                 solver = new TremauxSolver();
             }
+            case "dijkstra" -> {
+                logger.debug("Dijkstra algorithm chosen.");
+                solver = new DijkstraSolver();
+            }
             default -> {
                 throw new Exception("Maze solving method '" + method + "' not supported.");
             }
@@ -82,6 +86,7 @@ public class Main {
 
         options.addOption(new Option("p", true, "Path to be verified in maze"));
         options.addOption(new Option("method", true, "Specify which path computation algorithm will be used"));
+        options.addOption(new Option("baseline", true, "Specify the baseline path (to determine optimization factor)"));
 
         return options;
     }
