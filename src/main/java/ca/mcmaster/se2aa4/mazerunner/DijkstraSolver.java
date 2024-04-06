@@ -31,8 +31,9 @@ public class DijkstraSolver implements MazeSolver{
     @Override
     public Path solve(Maze maze){
         this.maze = maze;
-        this.graph = new MazeGraph(maze);
-        graph.constructGraph();
+        MazeVisitor visitor = new MazeGraphBuilder(new MazeGraph());
+        maze.accept(visitor);
+        this.graph = (MazeGraph) visitor.getResult();
         dijkstra(graph, maze.getStart());
         getNodePath(previousNodes, maze.getStart(), maze.getEnd());
         getPathFromNodes(nodePath);

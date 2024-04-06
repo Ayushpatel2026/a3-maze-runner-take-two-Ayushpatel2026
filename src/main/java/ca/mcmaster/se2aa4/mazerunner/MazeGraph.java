@@ -11,19 +11,11 @@ public class MazeGraph{
     
     private static final Logger logger = LogManager.getLogger();
 
-    Maze maze;
-
-    private final int numRows;
-    private final int numCols;
     Graph graph = new Graph();
 
-    public MazeGraph(Maze maze) {
-        this.maze = maze;
-        this.numRows = maze.getSizeY();
-        this.numCols = maze.getSizeX();
-    }
-
-    public void constructGraph(){
+    public void constructGraph(Maze maze){
+        int numRows = maze.getSizeY();
+        int numCols = maze.getSizeX();
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
                 if (maze.isWall(new Position(col, row)) == false) { 

@@ -161,4 +161,13 @@ public class Maze {
 
         return pos.equals(endPos);
     }
+
+    /**
+     * Accept a MazeVisitor.
+     *
+     * @param visitor The visitor to accept
+     */
+    public void accept(MazeVisitor visitor) {
+        visitor.visitMaze(this);
+    }
 }
