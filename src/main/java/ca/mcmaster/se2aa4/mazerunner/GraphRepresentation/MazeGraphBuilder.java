@@ -1,29 +1,46 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.GraphRepresentation;
 
-import java.util.ArrayList;
-import java.util.List;
+import ca.mcmaster.se2aa4.mazerunner.Maze;
+import ca.mcmaster.se2aa4.mazerunner.Position;
+import ca.mcmaster.se2aa4.mazerunner.MazeVisitor;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ca.mcmaster.se2aa4.mazerunner.Position;
-
-public class MazeGraph{
-    
+public class MazeGraphBuilder implements MazeVisitor {
     private static final Logger logger = LogManager.getLogger();
 
-    Maze maze;
+    private Graph graph = new Graph();
 
-    private final int numRows;
-    private final int numCols;
-    Graph graph = new Graph();
+    public MazeGraphBuilder() {
 
-    public MazeGraph(Maze maze) {
-        this.maze = maze;
-        this.numRows = maze.getSizeY();
-        this.numCols = maze.getSizeX();
     }
 
-    public void constructGraph(){
+    /**
+     * Visit the maze and construct a graph representation of it.
+     * @param maze
+     */
+    @Override
+    public void visitMaze(Maze maze) {
+        this.constructGraph(maze);
+    }
+
+    /**
+     * Get the constructed graph.
+     * @return the constructed graph
+     */
+    @Override
+    public Object getResult() {
+        return graph;
+    }
+
+    /**
+     * Construct a graph structure from the maze
+     * @param maze
+     */
+    public void constructGraph(Maze maze){
+        int numRows = maze.getSizeY();
+        int numCols = maze.getSizeX();
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
                 if (maze.isWall(new Position(col, row)) == false) { 
@@ -59,4 +76,6 @@ public class MazeGraph{
             }
         }
     }
+
+
 }
