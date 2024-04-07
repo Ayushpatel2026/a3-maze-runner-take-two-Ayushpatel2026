@@ -43,10 +43,10 @@ public class Graph{
     /**
      * Get the adjacent nodes of a node
      * @param node
-     * @return set of adjacent nodes
+     * @return list of adjacent nodes
      */
-    public Set<Position> getAdjNodes(Position node){
-        Set<Position> adjNodes = new HashSet<>();
+    public List<Position> getAdjNodes(Position node){
+        List<Position> adjNodes = new ArrayList<>();
         for(Edge edge : nodes.get(node)){
             adjNodes.add(edge.getDestination());
         }
