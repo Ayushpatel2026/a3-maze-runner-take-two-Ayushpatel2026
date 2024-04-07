@@ -1,8 +1,10 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.GraphRepresentation;
 
 import java.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import ca.mcmaster.se2aa4.mazerunner.Position;
 
 public class Graph{
 
@@ -11,23 +13,38 @@ public class Graph{
     //adjacency list representation using map
     private final Map<Position, List<Edge>> nodes = new HashMap<>();
 
+    /** 
+     * Initialize an empty graph
+     */
     public Graph(){
 
     }
 
+    /**
+     * Add a node to the graph
+     * @param node
+     */
     public void addNode(Position node){
         nodes.put(node, new ArrayList<>());
     }
 
+    /**
+     * add an edge to the graph
+     * @param source
+     * @param destination
+     * @param weight
+     */
     public void addEdge(Position source, Position destination, int weight){
         nodes.get(source).add(new Edge(destination, weight));
         nodes.get(destination).add(new Edge(source, weight)); //undirected graph
     }
 
-    public List<Edge> getEdges(Position node){
-        return nodes.get(node);
-    }
 
+    /**
+     * Get the adjacent nodes of a node
+     * @param node
+     * @return set of adjacent nodes
+     */
     public Set<Position> getAdjNodes(Position node){
         Set<Position> adjNodes = new HashSet<>();
         for(Edge edge : nodes.get(node)){
@@ -36,15 +53,12 @@ public class Graph{
         return adjNodes;
     }
 
-    public boolean isEdge(Position source, Position destination){
-        for(Edge edge : nodes.get(source)){
-            if(edge.getDestination().equals(destination)){
-                return true;
-            }
-        }
-        return false;
-    }
-
+    /**
+     * Get the weight of an edge (will technically always be one in this scenario)
+     * @param source
+     * @param destination
+     * @return weight of edge
+     */
     public int getEdgeWeight(Position source, Position destination){
         for(Edge edge : nodes.get(source)){
             if(edge.getDestination().equals(destination)){
@@ -54,6 +68,10 @@ public class Graph{
         return -1;
     }
 
+    /**
+     * Get all the nodes in the graph
+     * @return set of nodes
+     */
     public Set<Position> getNodes(){
         return nodes.keySet();
     }
@@ -67,10 +85,18 @@ public class Graph{
             this.weight = weight;
         }
 
+        /**
+         * Get the destination of the edge
+         * @return Position destination node
+         */
         public Position getDestination(){
             return destination;
         }
 
+        /**
+         * Get the weight of the edge
+         * @return int weight of edge
+         */        
         public int getWeight(){
             return weight;
         }

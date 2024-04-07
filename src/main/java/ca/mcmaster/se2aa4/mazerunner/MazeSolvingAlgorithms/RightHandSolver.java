@@ -1,7 +1,9 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.MazeSolvingAlgorithms;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import ca.mcmaster.se2aa4.mazerunner.*;
 
 public class RightHandSolver implements MazeSolver {
     private static final Logger logger = LogManager.getLogger();
