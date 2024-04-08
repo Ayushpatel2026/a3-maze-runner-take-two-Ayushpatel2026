@@ -33,4 +33,11 @@ class PathTest {
 
         assertEquals("FFFFFFFFFF RRRRRRRRRRR", path.getCanonicalForm());
     }
+
+    @Test 
+    void testgetNumSteps(){
+        Path path = new Path("10F 6R");
+
+        assertEquals(16, path.getNumSteps());
+    }
 }

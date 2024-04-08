@@ -39,8 +39,8 @@ public class DijkstraSolver implements MazeSolver{
         maze.accept(visitor);
         this.graph = (Graph) visitor.getResult();
         dijkstra(graph, maze.getStart());
-        computeNodePath(previousNodes, maze.getStart(), maze.getEnd());
-        computePathFromNodes(nodePath);
+        this.nodePath = computeNodePath(previousNodes, maze.getStart(), maze.getEnd());
+        this.path = computePathFromNodes(nodePath);
         return this.path;
     }
 
@@ -78,8 +78,10 @@ public class DijkstraSolver implements MazeSolver{
      * @param previousNodes
      * @param startNode
      * @param endNode
+     * @return List of nodes representing the shortest path
      */
-    public void computeNodePath(Map<Position, Position> previousNodes, Position startNode, Position endNode){
+    public List<Position> computeNodePath(Map<Position, Position> previousNodes, Position startNode, Position endNode){
+        List<Position> nodePath = new ArrayList<>();
         Position current = endNode;
         while(!current.equals(startNode)){
             nodePath.add(current);
@@ -88,13 +90,16 @@ public class DijkstraSolver implements MazeSolver{
 
         nodePath.add(startNode);
         Collections.reverse(nodePath);
+        return nodePath;
     }
 
     /**
      * Compute the path in terms of 'FLR' from the nodePath
      * @param nodePath
+     * @return Path object representing the shortest path
      */
-    public void computePathFromNodes(List<Position> nodePath){
+    public Path computePathFromNodes(List<Position> nodePath){
+        Path path = new Path();
         Direction dir = Direction.RIGHT;
         for(int i = 0; i < nodePath.size() - 1; i++){
             Position current = nodePath.get(i);
@@ -181,6 +186,7 @@ public class DijkstraSolver implements MazeSolver{
                 }
             }
         }
+        return path;
     }
 
 }

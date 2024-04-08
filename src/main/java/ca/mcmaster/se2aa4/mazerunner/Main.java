@@ -40,7 +40,7 @@ public class Main {
                 Path pathFromMethod = solveMaze(method, maze);
                 double endTimeMethod = System.currentTimeMillis();
                 double timeForMethod = endTimeMethod - startTimeMethod;
-                System.out.println("Number of steps for given method: "+pathFromMethod.getNumberOfSteps());
+                System.out.println("Number of steps for given method: "+pathFromMethod.getNumSteps());
                 System.out.println("Path calculated from given method: "+pathFromMethod.getFactorizedForm());
                 System.out.printf("Time to compute path using given method: %.2f miliseconds\n", timeForMethod);
 
@@ -51,10 +51,10 @@ public class Main {
                 double endTimeBaseline = System.currentTimeMillis();
                 double timeForBaseline = endTimeBaseline - startTimeBaseline;
 
-                System.out.println("Number of steps for baseline method: "+baselinePath.getNumberOfSteps());
+                System.out.println("Number of steps for baseline method: "+baselinePath.getNumSteps());
                 System.out.println("Path calculated from baseline method: "+baselinePath.getFactorizedForm());
                 System.out.printf("Time to compute path using baseline method: %.2f miliseconds\n", timeForBaseline);
-                System.out.printf("Speedup: %.2f\n", (double) baselinePath.getNumberOfSteps() / pathFromMethod.getNumberOfSteps());
+                System.out.printf("Speedup: %.2f\n", (double) baselinePath.getNumSteps() / pathFromMethod.getNumSteps());
             }
             else{
                 String method = cmd.getOptionValue("method", "righthand");
