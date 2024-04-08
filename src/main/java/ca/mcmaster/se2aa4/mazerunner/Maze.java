@@ -156,9 +156,7 @@ public class Maze {
                 case 'R' -> dir = dir.turnRight();
                 case 'L' -> dir = dir.turnLeft();
             }
-            logger.debug("Current Position: " + pos);
         }
-
         return pos.equals(endPos);
     }
 
