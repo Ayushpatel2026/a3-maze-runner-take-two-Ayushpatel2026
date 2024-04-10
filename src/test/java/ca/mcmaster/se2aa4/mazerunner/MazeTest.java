@@ -2,6 +2,8 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 import org.junit.jupiter.api.Test;
 
+import ca.mcmaster.se2aa4.mazerunner.GraphRepresentation.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -74,6 +76,23 @@ class MazeTest {
             path = new Path("F 20F F");
             assertFalse(maze.validatePath(path));
 
+            //path goes out of bounds
+            path = new Path("RRFFF");
+            assertFalse(maze.validatePath(path));
+
+        }catch (Exception e) {
+            fail("Exception thrown");
+        }
+    }
+
+    @Test 
+    void testAcceptVisitor(){
+        try {
+            Maze maze = new Maze("./examples/tiny.maz.txt");
+            MazeVisitor visitor = new MazeGraphBuilder();
+            maze.accept(visitor);
+            Graph graph = (Graph) visitor.getResult();
+            assertEquals(19, graph.getNodes().size());
         }catch (Exception e) {
             fail("Exception thrown");
         }

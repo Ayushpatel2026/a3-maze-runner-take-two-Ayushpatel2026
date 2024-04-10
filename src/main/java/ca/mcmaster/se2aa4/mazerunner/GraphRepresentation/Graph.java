@@ -54,7 +54,7 @@ public class Graph{
     }
 
     /**
-     * Get the weight of an edge (will technically always be one in this scenario)
+     * Get the weight of an edge (will technically always be 1 in this scenario)
      * @param source
      * @param destination
      * @return weight of edge

@@ -131,7 +131,7 @@ public class Path {
      * Get the number of steps in the path.
      * @return The number of steps in the path.
      */
-    public int getNumberOfSteps() {
+    public int getNumSteps() {
         String pathWithoutSpaces = this.getCanonicalForm().replace(" ", "");
         return pathWithoutSpaces.length();
     }
