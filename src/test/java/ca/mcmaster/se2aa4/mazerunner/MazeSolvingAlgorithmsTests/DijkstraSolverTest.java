@@ -18,7 +18,9 @@ class DijkstraSolverTest {
             Path path = solver.solve(maze);
             assertEquals("FFFF", path.getCanonicalForm());
 
-            
+            maze = new Maze("./examples/tiny.maz.txt");
+            path = solver.solve(maze);
+            assertEquals("FFF L FFFF R FFF", path.getCanonicalForm());
         } catch (Exception e) {
             fail("Exception thrown");
         

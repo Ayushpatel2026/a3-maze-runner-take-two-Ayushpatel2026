@@ -24,6 +24,8 @@ class PathTest {
         Path path = new Path("4F 3R L");
 
         assertEquals("FFFF RRR L", path.getCanonicalForm());
+        path = new Path("0F");
+        assertEquals("", path.getCanonicalForm());
     }
 
 
