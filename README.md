@@ -72,22 +72,15 @@ mosser@azrael A1-Template % java -jar target/mazerunner.jar ./examples/small.maz
 PATH NOT COMPUTED
 ** End of MazeRunner
 ```
-
-### Delivered version
-
 #### Command line arguments
 
-The delivered program at the end of this assignment should use the following flags:
+The started code uses the following flags:
 
 - `-i MAZE_FILE`: specifies the filename to be used;
 - `-p PATH_SEQUENCE`: activates the path verification mode to validate that PATH_SEQUENCE is correct for the maze
-
-If you are also delivering the bonus, your program will react to a third flag:
-
 - `-method {tremaux, righthand}`: specifies which path computation method to use. (default is right hand)
 
 #### Examples
-
 When no logs are activated, the programs only print the computed path on the standard output.
 
 ```
@@ -105,10 +98,58 @@ mosser@azrael A1-Template %
 ```
 
 If a given path is incorrect, the program prints the message `incorrect path` on the standard output.
-
 ```
 mosser@azrael A1-Template % java -jar target/mazerunner.jar -i ./examples/straight.maz.txt -p 3F
 inccorrect path
 mosser@azrael A1-Template %
+```
+
+#### Delivered Version
+
+New Method to solve the maze using Dijkstra's algorithm
+- `-method {tremaux, righthand, dijkstra}`: specifies which path computation method to use. (default is right hand if no method is specified)
+
+New baseline mode to compare execution time and speed up between two algorithms
+- `-method {tremaux, righthand, dijkstra} -baseline {tremeaux, righthand, dijkstra}`: {method is compared to the baseline method}
+  
+#### Examples
+
+No logs activated example of dijkstra method
+```
+ayushpatel@DESKTOP-TPLT7R2:~/assignment3/a3-maze-runner-take-two-Ayushpatel2026$ java -jar target/mazerunner.jar -i ./examples/tiny.maz.txt -method dijkstra
+3F L 4F R 3F
+ayushpatel@DESKTOP-TPLT7R2:~/assignment3/a3-maze-runner-take-two-Ayushpatel2026$
+```
+Baseline Method prints out time to load maze and execution time for the two specified methods, as well as the speedup.
+Speed up is calculated as: #steps for baseline method / #steps for specified method
+```
+ayushpatel@DESKTOP-TPLT7R2:~/assignment3/a3-maze-runner-take-two-Ayushpatel2026$ java -jar target/mazerunner.jar -i ./examples/tiny.maz.txt -method dijkstra -baseline tremaux
+Maze loaded in 1.00 miliseconds
+Number of steps for given method: 12
+Path calculated from given method: 3F L 4F R 3F
+Time to compute path using given method: 16.00 miliseconds
+Number of steps for baseline method: 12
+Path calculated from baseline method: 3F L 4F R 3F
+Time to compute path using baseline method: 5.00 miliseconds
+Speedup: 1.00
+ayushpatel@DESKTOP-TPLT7R2:~/assignment3/a3-maze-runner-take-two-Ayushpatel2026$
+```
+Example with dijkstra compared to right hand
+
+```
+ayushpatel@DESKTOP-TPLT7R2:~/assignment3/a3-maze-runner-take-two-Ayushpatel2026$ java -jar target/mazerunner.jar -i ./examples/tiny.maz.txt -method dijkstra -baseline righthand
+[INFO ] Main ** Starting Maze Runner
+Maze loaded in 1.00 miliseconds
+[INFO ] Main Computing path
+Number of steps for given method: 12
+Path calculated from given method: 3F L 4F R 3F
+Time to compute path using given method: 13.00 miliseconds
+[INFO ] Main Computing path
+Number of steps for baseline method: 26
+Path calculated from baseline method: 5F 2R 2F R 2F R 2F 2R 2F R 2F R 3F
+Time to compute path using baseline method: 6.00 miliseconds
+Speedup: 2.17
+[INFO ] Main End of MazeRunner
+ayushpatel@DESKTOP-TPLT7R2:~/assignment3/a3-maze-runner-take-two-Ayushpatel2026$
 ```
 
