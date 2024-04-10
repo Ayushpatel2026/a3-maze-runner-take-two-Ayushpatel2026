@@ -1,0 +1,135 @@
+```@startuml
+
+skin rose
+
+title MazeRunner Class Diagram
+
+package "GraphRepresentation" {
+  class Graph {
+    -nodes: Map<Position, List<Edge>>
+    +addNode(node:Position)
+    +addEdge(source:Position, destination:Position, weight:int)
+    +getNodes(): Set<Position>
+    +getEdgeWeight(): int
+    +getAdjNodes(node: Position): List<Position> 
+  }
+
+  class Edge{
+    ~destination:Position
+    ~weight:int
+    +getDestination():Position
+    +getWeight();int
+  }
+
+  class MazeGraphBuilder {
+      -graph:Graph
+      +visitMaze(maze:Maze)
+      +getResult():Object
+      +constructGraph(maze:Maze)
+  }
+
+
+  Graph +-- Edge
+  Graph "1" *-- "0..n" Edge
+  MazeGraphBuilder "1  " o-- "1  " Graph
+}
+
+package "MazeSolvingAlgorithms"{
+  interface MazeSolver{
+    solve(maze:Maze):Path
+  }
+
+  class DijkstraSolver{
+    -maze:maze
+    -graph:graph
+    -path:Path
+    -queue:PriorityQueue<Position>
+    -distances:Map<Position, Integer>
+    +solve(maze:Maze):Path
+    +dijkstra(graph:Graph, startNode:Position)
+    +computeNodePath():List<Position>
+    +computePathFromNodes(nodePath:List<Position>):Path
+
+  }
+
+  class RightHandSolver{
+    +solve(maze:Maze):Path
+  }
+
+  class TremauxSolver{
+    +solve(maze:Maze):Path
+  }
+
+  DijkstraSolver  ..|> MazeSolver
+  TremauxSolver ..|> MazeSolver
+  RightHandSolver ..|> MazeSolver
+}
+
+interface MazeVisitor{
+  +visitMaze(maze:Maze)
+  +getResult():Object
+}
+
+class Main{
+  -{static} getParserOptions:Options
+  -{static} solveMaze():Path
+}
+
+class Maze{
+  -maze:List<List<Boolean>>
+  -start:Position
+  -end:Position
+  +Maze(filePath:String)
+  -findStart():Position
+  -findEnd():Position
+  +accept(visitor:MazeVisitor)
+  +validatePath(path:Path):Boolean
+  +getStart:Position
+  +getEnd:Position
+  +getSizeX():int
+  +getSizeY():int
+  +isWall(pos:Position):Boolean
+}
+
+class Position{
+  +x:int
+  +y:int 
+  +add(other:Position):Position
+  +move(direction:direction):Position
+}
+
+enum Direction{
+  UP 
+  RIGHT 
+  LEFT 
+  DOWN 
+  +turnRight():Direction
+  +turnLeft():Direction
+}
+
+class Path{
+  -path:List<Character>
+  +Path(pathStr:String)
+  +expandFactorizedStringPath(path:String):String
+  +addStep(step:Character)
+  +getCanonicalForm():String
+  +getFactorizedForm():String
+  +getNumSteps():int
+}
+Maze <.. MazeGraphBuilder
+Maze .. MazeVisitor
+MazeGraphBuilder ..|> MazeVisitor
+MazeSolver ..> Maze
+Position .. Direction
+Maze ..> Path
+TremauxSolver ..> Path
+DijkstraSolver ..> Path
+RightHandSolver ..> Path
+Maze "1" o-- "2..n" Position
+Graph "1" o-- "2..n" Position
+Main .. Maze
+Main ..> Path
+Main .. MazeSolver
+DijkstraSolver ..> Graph
+DijkstraSolver ..> MazeGraphBuilder
+@enduml````
