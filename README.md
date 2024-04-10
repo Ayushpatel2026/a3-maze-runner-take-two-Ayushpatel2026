@@ -110,7 +110,7 @@ New Method to solve the maze using Dijkstra's algorithm
 - `-method {tremaux, righthand, dijkstra}`: specifies which path computation method to use. (default is right hand if no method is specified)
 
 New baseline mode to compare execution time and speed up between two algorithms
-- `-method {tremaux, righthand, dijkstra} -baseline {tremeaux, righthand, dijkstra}`: {method is compared to the baseline method}
+- `-method {tremaux, righthand, dijkstra} -baseline {tremeaux, righthand, dijkstra}`: specified method is compared to the baseline method
   
 #### Examples
 
