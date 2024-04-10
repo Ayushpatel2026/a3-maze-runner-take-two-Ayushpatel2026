@@ -1,0 +1,75 @@
+```title MazeRunner Sequence Diagram
+
+participant Main
+participant "Maze" as Maze
+participant "MazeSolver" as MazeSolver
+participant "Path" as Path
+participant "DijkstraSolver" as DijkstraSolver
+participant "RightHandSolver" as RightHandSolver
+participant "TremauxSolver" as TremauxSolver
+participant "MazeVisitor" as MazeVisitor
+participant "MazeGraphBuilder" as MazeGraphBuilder
+participant "Graph" as Graph
+
+Main -> Main: getParserOptions()
+Main -> Maze: new Maze(filePath)
+activate Maze
+Maze -> Maze: findStart()
+Maze -> Position: new Position()
+activate Position
+Position --> Maze: start
+Maze -> Maze: findEnd()
+Maze -> Position: new Position()
+Position --> Maze:end
+deactivate Position
+Maze --> Main: maze
+
+alt option == -p
+  Main -> Path: new Path()
+  activate Path
+  Path --> Main: path
+  deactivate Path
+  Main -> Maze: validatePath(path)
+  Maze -> Maze: validatePathDir(path)
+  Maze --> Main: isValid
+end
+
+alt option != -p 
+  Main -> MazeSolver: new solver
+  activate MazeSolver
+  MazeSolver -> DijkstraSolver: new DijkstraSolver()
+  activate DijkstraSolver
+  DijkstraSolver --> MazeSolver: solver
+  MazeSolver --> Main: solver
+  deactivate MazeSolver
+  Main -> DijkstraSolver: solver.solve(maze)
+  DijkstraSolver -> MazeVisitor: new MazeVisitor()
+  activate MazeVisitor
+  MazeVisitor -> MazeGraphBuilder: new MazeGraphBuilder()
+  activate MazeGraphBuilder
+  MazeGraphBuilder --> MazeVisitor: visitor
+  MazeVisitor --> DijkstraSolver: visitor
+  deactivate MazeVisitor
+  DijkstraSolver -> Maze: accept(visitor)
+  Maze -> MazeGraphBuilder: visitor.visitMaze(maze)
+  MazeGraphBuilder -> Graph: new Graph()
+  activate Graph
+  Graph --> MazeGraphBuilder: Graph
+  MazeGraphBuilder -> MazeGraphBuilder: constructGraph(maze)
+  deactivate Graph
+  DijkstraSolver -> MazeGraphBuilder: visitor.getResult()
+  MazeGraphBuilder --> DijkstraSolver: graph
+  deactivate MazeGraphBuilder
+  DijkstraSolver -> DijkstraSolver: dijkstra(graph)
+  DijkstraSolver -> DijkstraSolver: computeNodePath()
+  DijkstraSolver -> DijkstraSolver: computePathFromNodes(nodePath)
+  DijkstraSolver --> Main: path
+  deactivate DijkstraSolver
+  Main -> Path: getFactorizedForm()
+  activate Path
+  Path --> Main: factorizedPath
+  Main -> Path : getNumSteps()
+  Path --> Main: numSteps
+  deactivate Path
+end 
+Main -> Main: print(results)```
