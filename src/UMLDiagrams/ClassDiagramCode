@@ -1,4 +1,4 @@
-```@startuml
+@startuml
 
 skin rose
 
@@ -132,4 +132,4 @@ Main ..> Path
 Main .. MazeSolver
 DijkstraSolver ..> Graph
 DijkstraSolver ..> MazeGraphBuilder
-@enduml````
+@enduml
